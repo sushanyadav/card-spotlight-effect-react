@@ -19,12 +19,12 @@ body {
     255,
     255,
     0.06
-  ); /* with lower opacity card's border is visible */
+  ); /* with lower opacity so that everything under it (border & .content) is visible */
   --card-border-color: rgba(
     255,
     255,
     255,
-    0.3
+    0.4
   ); /* it is brighter than spotlight so that it is more prominent & visible */
 }
 
@@ -66,22 +66,26 @@ body {
   opacity: 0;
 }
 
-/* card's border */
-.card:before {
-  /* since ":before" comes before the card content so that only border area is visible, other area is covered by after and contents */
-  background: radial-gradient(
-    calc(var(--spot-light-size) / 2) circle at var(--pos-x) var(--pos-y),
-    var(--card-border-color),
-    transparent 40%
-  );
-}
-
 /* spotlight */
 .card:after {
   /* since ":after" comes after the card content so that it is always on top of card */
   background: radial-gradient(
     var(--spot-light-size) circle at var(--pos-x) var(--pos-y),
     var(--spot-light-color),
+    transparent 40%
+  );
+}
+
+/* card's border */
+.card:before {
+  /* The reason that only the border area is visible here even both ":before" & ":after" is set to inset 0 is because the ":before" element appears before the ".content" and ":after" elements. 
+  
+  In the css above in ".content", we have created some space for the border area. 
+  
+  It's worth noting that the ":after" element's background has transparency, which is also allowing the ":before" element to be properly visible. */
+  background: radial-gradient(
+    calc(var(--spot-light-size) / 2) circle at var(--pos-x) var(--pos-y),
+    var(--card-border-color),
     transparent 40%
   );
 }
